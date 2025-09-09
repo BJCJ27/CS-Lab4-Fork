@@ -1,0 +1,27 @@
+#include <stdio.h>
+#include <unistd.h>
+#include <sched.h>
+
+int main() {
+    pid_t pid1, pid2;
+
+    pid1 = fork();
+    if (pid1 == 0) {
+        // Inside first child
+        printf("Child 1, PID: %d\n", getpid());
+        return 0;
+    }
+
+    // Only parent reaches here
+    pid2 = fork();
+    if (pid2 == 0) {
+        // Inside second child
+        printf("Child 2, PID: %d\n", getpid());
+        return 0;
+    }
+
+    // Only original parent gets here
+    printf("I am the parent, PID: %d\n", getpid());
+
+    return 0;
+}

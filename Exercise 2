@@ -1,0 +1,24 @@
+#include <stdio.h>
+#include <unistd.h>  // for fork(), getpid()
+#include <sched.h>
+
+int main() {
+    pid_t pid1 = fork();  // First fork: parent creates a child
+
+    if (pid1 > 0) {
+        // This runs in the parent process
+        printf("I am the parent, PID: %d\n", getpid());
+    } else if (pid1 == 0) {
+        // This runs in the first child process
+        printf("I am the child, PID: %d\n", getpid());
+
+        pid_t pid2 = fork();  // Second fork: child creates a grandchild
+
+        if (pid2 == 0) {
+            // This runs in the grandchild process
+            printf("I am the grandchild, PID: %d\n", getpid());
+        }
+    }
+
+    return 0;
+}

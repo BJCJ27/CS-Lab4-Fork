@@ -1,0 +1,20 @@
+#include <stdio.h>
+#include <unistd.h>
+#include <sys/types.h>
+#include <sys/wait.h>
+
+int main() {
+    pid_t pid = fork();  // Create child process
+
+    if (pid == 0) {
+        // Child process
+        printf("Executing ls command...\n");
+        execlp("ls", "ls", "-l", NULL);  // Replace this process with `ls -l`
+    } else {
+        // Parent process
+        wait(NULL);  // Wait for child to finish
+        printf("Parent process finished.\n");
+    }
+
+    return 0;
+}
